@@ -20,9 +20,10 @@ const FOCUS = { minutes: 30, min: 10, max: 90, step: 10 }
 // The break is set on the same knob (pull past the start and hold): off, or 5 to 30 minutes.
 const BREAK = { minutes: 5, min: 0, max: 30, step: 5 }
 const BREAK_KEY = 'dorotimer:break'
-// Holding the main button this long resets a run; a press longer than PRESS_MS isn't a click.
-const RESET_HOLD_MS = 5000
-const PRESS_MS = 300
+// Holding the main button resets a run: after a short pause (RESET_DELAY_MS) the button fills red
+// over RESET_HOLD_MS. A press shorter than the pause is a click; anything longer isn't.
+const RESET_DELAY_MS = 400
+const RESET_HOLD_MS = 3000
 
 const EASE = 'cubic-bezier(0.19, 1, 0.22, 1)'
 
@@ -177,19 +178,22 @@ export default function App() {
     // Start, Next: nothing to reset, so every press is a plain click.
     if (!canReset) return
     hold.current = { since: performance.now(), long: false }
-    setHolding(true)
+    // Wait a moment before the fill starts, so an ordinary press never flashes red.
     hold.current.timer = setTimeout(() => {
-      setHolding(false)
-      hold.current.long = true
-      resetRef.current()
-    }, RESET_HOLD_MS)
+      setHolding(true)
+      hold.current.timer = setTimeout(() => {
+        setHolding(false)
+        hold.current.long = true
+        resetRef.current()
+      }, RESET_HOLD_MS)
+    }, RESET_DELAY_MS)
   }
 
   /** Ends a hold; true when it was long enough not to count as a click. */
   function endHold() {
     clearTimeout(hold.current.timer)
     setHolding(false)
-    const long = hold.current.long || (hold.current.since > 0 && performance.now() - hold.current.since > PRESS_MS)
+    const long = hold.current.long || (hold.current.since > 0 && performance.now() - hold.current.since > RESET_DELAY_MS)
     hold.current = { since: 0, long: false }
     return long
   }
@@ -274,7 +278,7 @@ export default function App() {
             className="relative h-12 flex-1 overflow-hidden text-base"
             size="lg"
             aria-label={action}
-            aria-description={canReset ? 'Hold for 5 seconds to reset' : undefined}
+            aria-description={canReset ? 'Hold for 3 seconds to reset' : undefined}
             // Pointer: a short press is a click; holding resets. The click comes after pointer-up,
             // so a long press marks it to be ignored.
             onPointerDown={(e) => e.button === 0 && beginHold()}
@@ -304,7 +308,7 @@ export default function App() {
               aria-hidden="true"
               className={cn(
                 'absolute inset-0 origin-left bg-red-500/85 transition-transform',
-                holding ? 'scale-x-100 duration-[5000ms] ease-linear' : 'scale-x-0 duration-200 ease-out',
+                holding ? 'scale-x-100 duration-[3000ms] ease-linear' : 'scale-x-0 duration-200 ease-out',
               )}
             />
             <TextMorph duration={350} ease={EASE} className="relative">

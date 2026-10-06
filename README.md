@@ -21,7 +21,7 @@ npm start     # starts it at http://localhost:8980
 
 **Break.** Pull the handle past the start of the dial, into the gap at the bottom, and hold: the knob turns into the break setting (off, or 5 to 30 minutes). Drag to set it, let go to get back to the focus length. The break shows under the clock as "+ 5 min break".
 
-**Run.** One press of **Start** runs the focus and then, if one is set, the break straight after it. The button also pauses and resumes. To reset a run, hold the button for 5 seconds: it fills red from left to right, and letting go early cancels.
+**Run.** One press of **Start** runs the focus and then, if one is set, the break straight after it. The button also pauses and resumes. To reset a run, hold the button: after a moment it fills red from left to right over 3 seconds, and letting go early cancels.
 
 **Keyboard.** With the knob focused, the arrow keys move in steps and Shift + arrow in single minutes; Home and End jump to the ends. **B** switches to the break setting (arrows set it; B, Enter or Escape go back). Holding Space or Enter on the button resets, like holding it with the pointer.
 
