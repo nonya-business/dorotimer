@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/a6e867a2-f00b-44c5-8033-07be89b75921
+
 # dorotimer
 
 A focus timer on a single radial knob, where every number morphs into the next and your sessions slowly build up the background.
