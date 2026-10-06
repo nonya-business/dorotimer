@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Claude Code's local working files
+.claude/
+
+# Sounds: only the SND files the timer plays are published (see public/sounds/NOTICE.md)
+public/sounds/*
+!public/sounds/NOTICE.md
+!public/sounds/tap_0[1-5].wav
+!public/sounds/toggle_on.wav
+!public/sounds/toggle_off.wav
+!public/sounds/button.wav
+!public/sounds/celebration.wav
+!public/sounds/notification.wav
+!public/sounds/transition_up.wav
+!public/sounds/transition_down.wav
